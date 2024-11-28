@@ -1,0 +1,6 @@
+# @WordFinder.API_HostAddress = http://localhost:5000
+
+# GET {{WordFinder.API_HostAddress}}/wordfinder/
+# Accept: application/json
+
+# ###

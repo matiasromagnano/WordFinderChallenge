@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/WordFinder.API/.vs/WordFinder.API
+/WordFinder.API/obj
+/WordFinder.API/.vs/ProjectEvaluation
+/WordFinder.Core/obj
+/WordFinder.Utilities/obj
+/WordFinderChallenge.API/.vs
+/WordFinderChallenge.API/bin/Debug/net9.0
+/WordFinderChallenge.API/obj
+/WordFinderChallenge.Core/bin/Debug/net9.0
+/WordFinderChallenge.Core/obj
+/WordFinderChallenge.Utilities/bin/Debug/net9.0
+/WordFinderChallenge.Utilities/obj
