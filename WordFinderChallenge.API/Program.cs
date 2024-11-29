@@ -13,7 +13,7 @@ public class Program
         {
             options.Filters.Add<ApiExceptionFilter>();
             options.Filters.Add<NormalizeApiResponseAttribute>();
-            
+
         })
         .AddJsonOptions(options =>
         {

@@ -14,8 +14,8 @@ public class WordFinder
     public WordFinder(IEnumerable<string> matrix, int maxSize = 64, int topWordsCount = 10)
     {
         var validationResult = ValidateMatrix(matrix, maxSize);
-        if (validationResult.IsValid is false) 
-            throw new ArgumentException(validationResult.ResultDetails); 
+        if (validationResult.IsValid is false)
+            throw new ArgumentException(validationResult.ResultDetails);
 
         _matrixWidth = matrix.FirstOrDefault()!.Length; // We know the matrix is not null here since we already did the ValidateMatrix that do this check
         _matrixData = GetHorizontalAndVerticalStrings(matrix);
@@ -51,7 +51,7 @@ public class WordFinder
             .OrderByDescending(keyValuePair => keyValuePair.Value)
             .ThenBy(keyValuePair => keyValuePair.Key) //We order it alphabetically too in case we get more than one word with the same time of appearance
             .Take(_topWordsCount);
-            
+
         return orderedwordMatches.ToWordOccurrences();
     }
 

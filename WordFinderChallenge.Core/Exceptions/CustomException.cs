@@ -1,5 +1,8 @@
-﻿namespace WordFinderChallenge.Core.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace WordFinderChallenge.Core.Exceptions;
+
+[ExcludeFromCodeCoverage]
 public abstract class CustomException : Exception
 {
 

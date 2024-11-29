@@ -58,12 +58,37 @@ public class WordFinderControllerTests : IClassFixture<CustomWebApplicationFacto
     }
 
     [Theory]
+    [InlineData(nameof(CharacterMatricesRepository.Matrix16x16))]
+    [InlineData(nameof(CharacterMatricesRepository.Matrix64x64))]
+    public async Task SearchOnValidMatrices_ShouldReturnBadRequest(string matrixType)
+    {
+        // Arrange
+        var invalidWordStreamRequest = "partner";
+
+        var content = new StringContent(
+            invalidWordStreamRequest,
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
+
+        // Act
+        var result = await _client.PostAsync($"{BaseUrl}{matrixType}", content);
+
+        // Assert
+        var responseJson = await result.Content.ReadAsStringAsync();
+        var response = JsonSerializer.Deserialize<ApiResponse<List<WordOccurrences>>>(responseJson, _jsonOptions);
+        response?.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+        response?.Data.Should().BeNull();
+        response?.Details?.Should().NotBeNull();
+        response?.Message.Should().Be("One or more validation errors occurred.");
+    }
+
+    [Theory]
     [InlineData(nameof(CharacterMatricesRepository.InvalidMatrixEmpty))]
     [InlineData(nameof(CharacterMatricesRepository.InvalidMatrixDifferentLengths))]
     [InlineData(nameof(CharacterMatricesRepository.InvalidMatrix65x2))]
     [InlineData(nameof(CharacterMatricesRepository.InvalidMatrix2x65))]
     [InlineData(nameof(CharacterMatricesRepository.InvalidMatrix65x65))]
-    public async Task SearchOnInvalidMatrices_ShouldReturnOk(string matrixType)
+    public async Task SearchOnInvalidMatrices_ShouldReturnInternalServerError(string matrixType)
     {
         // Arrange
         // Arrange
