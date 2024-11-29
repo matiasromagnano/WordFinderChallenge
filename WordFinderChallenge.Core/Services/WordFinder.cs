@@ -31,6 +31,8 @@ public class WordFinder
         {
             Parallel.ForEach(wordStream.Distinct(), word =>
             {
+                word = word.Trim().ToLower();
+
                 // Count the total occurrences of the word across all matrix strings
                 var count = _matrixData.Sum(matrixString => matrixString.CountOccurrences(word));
 

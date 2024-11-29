@@ -16,18 +16,18 @@ namespace WordFinderChallenge.Tests.API.Integration;
 /// </summary>
 public class WordFinderControllerTests : IClassFixture<CustomWebApplicationFactory>
 {
-    public HttpClient Client { get; private set; }
-    public JsonSerializerOptions JsonOptions { get; private set; }
-    //private readonly HttpClient _client;
-    //private readonly JsonSerializerOptions _jsonOptions;
+    private readonly HttpClient _client;
+    private readonly JsonSerializerOptions _jsonOptions;
 
     private const string Success = nameof(Success);
     public const string BaseUrl = "api/WordFinder/";
+    public const string PartnerWord = "partner";
+    public const string DigitalWord = "digital";
 
     public WordFinderControllerTests(CustomWebApplicationFactory factory)
     {
-        Client = factory.CreateClient();
-        JsonOptions = factory.JsonOptions;
+        _client = factory.CreateClient();
+        _jsonOptions = factory.JsonOptions;
     }
 
     [Theory]
@@ -36,8 +36,7 @@ public class WordFinderControllerTests : IClassFixture<CustomWebApplicationFacto
     public async Task SearchOnValidMatrices_ShouldReturnOk(string matrixType)
     {
         // Arrange
-        var wordStreamRequest = CustomHelpers.GenerateWords(1);
-        wordStreamRequest.Add("partner"); //We add this word because we know it's on the Matrix
+        var wordStreamRequest = PrepareWordStream(40);
 
         var content = new StringContent(
             JsonSerializer.Serialize(wordStreamRequest),
@@ -45,14 +44,16 @@ public class WordFinderControllerTests : IClassFixture<CustomWebApplicationFacto
             MediaTypeNames.Application.Json);
 
         // Act
-        var result = await Client.PostAsync($"{BaseUrl}{matrixType}", content);
+        var result = await _client.PostAsync($"{BaseUrl}{matrixType}", content);
 
         // Assert
         var responseJson = await result.Content.ReadAsStringAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse<List<WordOccurrences>>>(responseJson, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResponse<List<WordOccurrences>>>(responseJson, _jsonOptions);
         response?.StatusCode.Should().Be(StatusCodes.Status200OK);
         response?.Data.Should().NotBeNull();
         response?.Data?.Count.Should().BeGreaterThan(0);
+        response?.Data?.Any(w => w.Word == PartnerWord).Should().BeTrue();
+        response?.Data?.Any(w => w.Word == DigitalWord).Should().BeTrue();
         response?.Message.Should().Be(Success);
     }
 
@@ -65,8 +66,8 @@ public class WordFinderControllerTests : IClassFixture<CustomWebApplicationFacto
     public async Task SearchOnInvalidMatrices_ShouldReturnOk(string matrixType)
     {
         // Arrange
-        var wordStreamRequest = CustomHelpers.GenerateWords(40);
-        wordStreamRequest.Add("partner"); //We add this word because we know it's on the Matrix
+        // Arrange
+        var wordStreamRequest = PrepareWordStream(40);
 
         var content = new StringContent(
             JsonSerializer.Serialize(wordStreamRequest),
@@ -74,13 +75,21 @@ public class WordFinderControllerTests : IClassFixture<CustomWebApplicationFacto
             MediaTypeNames.Application.Json);
 
         // Act
-        var result = await Client.PostAsync($"{BaseUrl}{matrixType}", content);
+        var result = await _client.PostAsync($"{BaseUrl}{matrixType}", content);
 
         // Assert
         var responseJson = await result.Content.ReadAsStringAsync();
-        var response = JsonSerializer.Deserialize<ApiResponse<List<WordOccurrences>>>(responseJson, JsonOptions);
+        var response = JsonSerializer.Deserialize<ApiResponse<List<WordOccurrences>>>(responseJson, _jsonOptions);
         response?.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         response?.Data.Should().BeNull();
         response?.Message.Should().Contain("Matrix is invalid");
+    }
+
+    private static List<string> PrepareWordStream(int wordCount)
+    {
+        var wordStreamRequest = CustomHelpers.GenerateWords(wordCount);
+        wordStreamRequest.Add(PartnerWord); //We add this word because we know it's (horizontally) on the Matrix
+        wordStreamRequest.Add(DigitalWord); //We add this word because we know it's (vertically) on the Matrix
+        return wordStreamRequest;
     }
 }

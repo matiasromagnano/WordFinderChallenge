@@ -17,3 +17,11 @@
 /WordFinderChallenge.Utilities/obj
 /WordFinderChallenge.Tests/bin/Debug/net9.0
 /WordFinderChallenge.Tests/obj
+/WordFinderChallenge.API/bin/Release/net9.0/refs
+/WordFinderChallenge.API/bin/Release/net9.0
+/WordFinderChallenge.Core/bin/Release/net9.0
+/WordFinderChallenge.PerfomanceTests/bin
+/WordFinderChallenge.PerfomanceTests/obj
+/WordFinderChallenge.PerfomanceTests/obj/Debug/net9.0/ref/WordFinderChallenge.PerfomanceTests.dll
+/WordFinderChallenge.Tests/bin/Release/net9.0
+/WordFinderChallenge.Utilities/bin/Release/net9.0
