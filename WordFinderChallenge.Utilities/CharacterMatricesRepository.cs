@@ -178,6 +178,10 @@ public class CharacterMatricesRepository
         "digitalkykdlomtotnkwbqsbzabpdosuhrxsstnythvmplpbxgaqmajkhqwzgoko"
     ];
 
+    public static IEnumerable<string> InvalidMatrixEmpty =>
+    [
+    ];
+
     public static IEnumerable<string> InvalidMatrix2x65 =>
     [
         "commercezmvialvawagdepegdyagmeeeysodumrfpuyeqwcuojpxdlnuyzxhzfshd",

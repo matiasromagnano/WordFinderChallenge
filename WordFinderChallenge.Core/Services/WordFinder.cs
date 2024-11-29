@@ -18,13 +18,12 @@ public class WordFinder
             throw new ArgumentException(validationResult.ResultDetails); 
 
         _matrixWidth = matrix.FirstOrDefault()!.Length; // We know the matrix is not null here since we already did the ValidateMatrix that do this check
-        _matrixData = GetHorizontalVerticalStrings(matrix);
+        _matrixData = GetHorizontalAndVerticalStrings(matrix);
         _topWordsCount = topWordsCount;
     }
 
     public async Task<IEnumerable<WordOccurrences>> FindAsync(IEnumerable<string> wordStream)
     {
-        
         //We are using concurrent dictonary since it was designed for multi-threaded processing.
         var wordMatches = new ConcurrentDictionary<string, int>();
 
@@ -59,7 +58,7 @@ public class WordFinder
     /// </summary>
     /// <param name="matrix"></param>
     /// <returns></returns>
-    private List<string> GetHorizontalVerticalStrings(IEnumerable<string> matrix)
+    private List<string> GetHorizontalAndVerticalStrings(IEnumerable<string> matrix)
     {
         var wordSet = new List<string>();
 

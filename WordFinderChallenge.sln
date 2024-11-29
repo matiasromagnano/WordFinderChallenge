@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordFinderChallenge.Utiliti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordFinderChallenge.Core", "WordFinderChallenge.Core\WordFinderChallenge.Core.csproj", "{02DA6299-3F6D-4643-97DC-A0EEF012BC0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordFinderChallenge.Tests", "WordFinderChallenge.Tests\WordFinderChallenge.Tests.csproj", "{0B033180-A9AD-4B4A-9890-3D05E1FC90EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{02DA6299-3F6D-4643-97DC-A0EEF012BC0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02DA6299-3F6D-4643-97DC-A0EEF012BC0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02DA6299-3F6D-4643-97DC-A0EEF012BC0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B033180-A9AD-4B4A-9890-3D05E1FC90EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B033180-A9AD-4B4A-9890-3D05E1FC90EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B033180-A9AD-4B4A-9890-3D05E1FC90EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B033180-A9AD-4B4A-9890-3D05E1FC90EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

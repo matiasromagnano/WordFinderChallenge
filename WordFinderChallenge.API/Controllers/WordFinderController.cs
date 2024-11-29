@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WordFinderChallenge.API.Configuration;
-using WordFinderChallenge.API.Filters;
 using WordFinderChallenge.Core.Services;
 using WordFinderChallenge.Utilities;
 
 namespace WordFinderChallenge.API.Controllers;
 
 [ApiController]
-[NormalizeApiResponse]
 [Route("api/[controller]")]
 public class WordFinderController : ControllerBase
 {
@@ -35,6 +33,17 @@ public class WordFinderController : ControllerBase
     public async Task<IActionResult> Matrix64x64([FromBody] IEnumerable<string> wordStream)
     {
         var wordFinder = new WordFinder(CharacterMatricesRepository.Matrix64x64, _applicationOptions.MatrixSize, _applicationOptions.TopMostRepeatedWordsCount);
+
+        var topFoundWords = await wordFinder.FindAsync(wordStream);
+
+        return Ok(topFoundWords ?? []);
+    }
+
+    [HttpPost]
+    [Route(nameof(CharacterMatricesRepository.InvalidMatrixEmpty))]
+    public async Task<IActionResult> InvalidMatrixEmpty([FromBody] IEnumerable<string> wordStream)
+    {
+        var wordFinder = new WordFinder(CharacterMatricesRepository.InvalidMatrixEmpty, _applicationOptions.MatrixSize, _applicationOptions.TopMostRepeatedWordsCount);
 
         var topFoundWords = await wordFinder.FindAsync(wordStream);
 

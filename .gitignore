@@ -15,3 +15,5 @@
 /WordFinderChallenge.Core/obj
 /WordFinderChallenge.Utilities/bin/Debug/net9.0
 /WordFinderChallenge.Utilities/obj
+/WordFinderChallenge.Tests/bin/Debug/net9.0
+/WordFinderChallenge.Tests/obj
